@@ -16,7 +16,8 @@ class DBStorage:
         ps = os.environ.get('HBNB_MYSQL_PWD')
         host = os.environ.get('HBNB_MYSQL_HOST')
         db = os.environ.get('HBNB_MYSQL_DB')
-        self.__engine = create_engine(f"mysql+mysqldb://{usr}:{ps}@{host}/{db}", 
+        statement = f"mysql+mysqldb://{usr}:{ps}@{host}/{db}"
+        self.__engine = create_engine(f"{statement}",
                                       pool_pre_ping=True)
         if os.environ.get('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
@@ -65,6 +66,7 @@ class DBStorage:
         from models.amenity import Amenity
         from models.review import Review
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_factory = sessionmaker(bind=self.__engine,
+                                       expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
