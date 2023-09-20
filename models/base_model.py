@@ -8,6 +8,8 @@ from datetime import datetime
 
 
 Base = declarative_base()
+
+
 class BaseModel:
     """A base class for all hbnb models"""
     id = Column(String(60), unique=True, nullable=False, primary_key=True)
@@ -25,7 +27,7 @@ class BaseModel:
             kwargs['updated_at'] = datetime.utcnow()
             kwargs['created_at'] = datetime.utcnow()
             kwargs['id'] = str(uuid.uuid4())
-            
+
             self.__dict__.update(kwargs)
 
     def __str__(self):
@@ -59,4 +61,3 @@ class BaseModel:
         """ delete current instance from the storage """
         from models import storage
         storage.delete(self)
-        
