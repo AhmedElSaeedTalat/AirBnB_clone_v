@@ -25,7 +25,7 @@ def do_deploy(archive_path):
                 {pth}/{file_name.strip('.tgz')}/")
         run(f"rm -rf {pth}/{file_name.strip('.tgz')}/web_static/")
         run("rm -rf /data/web_static/current")
-        run(f"ln -s {pht}/{file_name.strip('.tgz')}/ /data/web_static/current")
+        run(f"ln -s {pth}/{file_name.strip('.tgz')}/ /data/web_static/current")
         return True
     except Exception:
         return False
