@@ -9,6 +9,7 @@ env.hosts = [
 
 
 def do_deploy(archive_path):
+    """do_deploy(archive_path): to deploy static code"""
     if archive_path is None:
         return False
     put(archive_path, '/tmp/')
