@@ -6,6 +6,7 @@ import re
 
 
 def do_pack():
+    """ do_pack(): packs dir """
     date = datetime.now().isoformat()
     date = re.findall('\\d+', date)
     date = ''.join(date)
