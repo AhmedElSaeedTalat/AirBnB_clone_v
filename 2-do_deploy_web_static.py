@@ -13,32 +13,19 @@ def do_deploy(archive_path):
     """do_deploy(archive_path): to deploy static code"""
     if archive_path is None or os.path.exists(archive_path) is False:
         return False
-    put(archive_path, '/tmp/')
-    file_name = re.findall('(?<=versions/).+', archive_path)
-    file_name = file_name[0]
-    op1 = run(f"mkdir -p /data/web_static/releases/{file_name.strip('.tgz')}/")
-    if op1.failed:
+    try:
+        put(archive_path, '/tmp/')
+        file_name = re.findall('(?<=versions/).+', archive_path)
+        file_name = file_name[0]
+        pth = f"/data/web_static/releases"
+        run(f"mkdir -p {pth}/{file_name.strip('.tgz')}/")
+        run(f"tar -xzf /tmp/{file_name} -C {pth}/{file_name.strip('.tgz')}/")
+        run(f"rm /tmp/{file_name}")
+        run(f"mv {pth}/{file_name.strip('.tgz')}/web_static/* \
+                {pth}/{file_name.strip('.tgz')}/")
+        run(f"rm -rf {pth}/{file_name.strip('.tgz')}/web_static/")
+        run("rm -rf /data/web_static/current")
+        run(f"ln -s {pht}/{file_name.strip('.tgz')}/ /data/web_static/current")
+        return True
+    except Exception:
         return False
-    arg = f"/data/web_static/releases/{file_name.strip('.tgz')}/"
-    op2 = run(f"tar -xzf /tmp/{file_name} -C {arg}")
-    if op2.failed:
-        return False
-    op3 = run(f"rm /tmp/{file_name}")
-    if op3.failed:
-        return False
-    arg = f"/data/web_static/releases/{file_name.strip('.tgz')}/web_static/*"
-    op4 = run(f"mv {arg} /data/web_static/releases/{file_name.strip('.tgz')}/")
-    if op4.failed:
-        return False
-    arg = f"/data/web_static/releases/{file_name.strip('.tgz')}/web_static/"
-    op5 = run(f"rm -rf {arg}")
-    if op5.failed:
-        return False
-    op6 = run("rm -rf /data/web_static/current")
-    if op6.failed:
-        return False
-    arg = f"/data/web_static/releases/{file_name.strip('.tgz')}/"
-    op7 = run(f"ln -s {arg} /data/web_static/current")
-    if op7.failed:
-        return False
-    return True
