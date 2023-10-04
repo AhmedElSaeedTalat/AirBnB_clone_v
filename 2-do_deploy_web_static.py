@@ -2,6 +2,7 @@
 """ distributes an archive to your web servers """
 from fabric.api import *
 import re
+import os
 env.hosts = [
         'ubuntu@52.23.178.138',
         'ubuntu@100.25.29.150'
@@ -10,7 +11,7 @@ env.hosts = [
 
 def do_deploy(archive_path):
     """do_deploy(archive_path): to deploy static code"""
-    if archive_path is None:
+    if archive_path is None or os.path.exists(archive_path) is False:
         return False
     put(archive_path, '/tmp/')
     file_name = re.findall('(?<=versions/).+', archive_path)
