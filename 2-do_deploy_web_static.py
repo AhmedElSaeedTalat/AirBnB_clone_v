@@ -15,21 +15,29 @@ def do_deploy(archive_path):
     put(archive_path, '/tmp/')
     file_name = re.findall('(?<=versions/).+', archive_path)
     file_name = file_name[0]
-    sudo(f"mkdir -p /data/web_static/releases/{file_name.strip('.tgz')}/")
-    arg = f"/data/web_static/releases/{file_name.strip('.tgz')}/"
-    op1 = sudo(f"tar -xzf /tmp/{file_name} -C {arg}")
-    op2 = sudo(f"rm /tmp/{file_name}")
-    if op1.failed or op2.failed:
+    op1 = run(f"mkdir -p /data/web_static/releases/{file_name.strip('.tgz')}/")
+    if op1.failed:
         return False
-    arg = f"/data/web_static/releases/{file_name.strip('.tgz')}/web_static/*"
-    sudo(f"mv {arg} /data/web_static/releases/{file_name.strip('.tgz')}/")
-    arg = f"/data/web_static/releases/{file_name.strip('.tgz')}/web_static/"
-    sudo(f"rm -rf {arg}")
-    op3 = sudo("rm -rf /data/web_static/current")
+    arg = f"/data/web_static/releases/{file_name.strip('.tgz')}/"
+    op2 = run(f"tar -xzf /tmp/{file_name} -C {arg}")
+    if op2.failed:
+        return False
+    op3 = run(f"rm /tmp/{file_name}")
     if op3.failed:
         return False
-    arg = f"/data/web_static/releases/{file_name.strip('.tgz')}/"
-    op4 = sudo(f"ln -s {arg} /data/web_static/current")
+    arg = f"/data/web_static/releases/{file_name.strip('.tgz')}/web_static/*"
+    op4 = run(f"mv {arg} /data/web_static/releases/{file_name.strip('.tgz')}/")
     if op4.failed:
+        return False
+    arg = f"/data/web_static/releases/{file_name.strip('.tgz')}/web_static/"
+    op5 = run(f"rm -rf {arg}")
+    if op5.failed:
+        return False
+    op6 = run("rm -rf /data/web_static/current")
+    if op6.failed:
+        return False
+    arg = f"/data/web_static/releases/{file_name.strip('.tgz')}/"
+    op7 = run(f"ln -s {arg} /data/web_static/current")
+    if op7.failed:
         return False
     return True
