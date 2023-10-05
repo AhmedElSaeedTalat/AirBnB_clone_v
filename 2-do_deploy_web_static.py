@@ -10,7 +10,7 @@ env.hosts = [
 
 def do_deploy(archive_path):
     """do_deploy(archive_path): to deploy static code"""
-    if archive_path is None or os.path.exists(archive_path) is False:
+    if os.path.exists(archive_path) is False:
         return False
     try:
         put(archive_path, '/tmp/')
@@ -27,5 +27,5 @@ def do_deploy(archive_path):
         run(f"ln -s {pth}/{no_tgz_file}/ /data/web_static/current")
         print("New version deployed!")
         return True
-    except Exception:
+    except:
         return False
