@@ -11,6 +11,7 @@ env.hosts = [
         ]
 
 
+@runs_once
 def do_pack():
     """ do_pack(): packs dir """
     day = datetime.now().isoformat()
@@ -50,21 +51,8 @@ def do_deploy(archive_path):
 
 def deploy():
     """creates and distributes an archive to your web servers"""
-    file_name = None
-    day = date.today().isoformat()
-    day = re.findall('\\d+', day)
-    day = ''.join(day)
-    files = os.listdir('versions')
-    for file in files:
-        if file.startswith('web_static_{}'.format(day)):
-            file_name = file
-            break
-    if not file_name:
-        path = do_pack()
-        if path is None:
-            return False
-        val = do_deploy(path)
-        return val
-    else:
-        val = do_deploy("versions/{}".format(file_name))
-        return val
+    path = do_pack()
+    if path is None:
+        return False
+    val = do_deploy(path)
+    return val
