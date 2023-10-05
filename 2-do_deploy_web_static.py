@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ distributes an archive to your web servers """
-from fabric.api import *
+from fabric.api import run, put
 import os
 env.hosts = [
         '52.23.178.138',
@@ -27,5 +27,5 @@ def do_deploy(archive_path):
         run(f"ln -s {pth}/{no_tgz_file}/ /data/web_static/current")
         print("New version deployed!")
         return True
-    except:
+    except Exception:
         return False
