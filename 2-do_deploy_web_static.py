@@ -32,15 +32,16 @@ def do_deploy(archive_path):
         put(archive_path, '/tmp/')
         file_name = archive_path.split('/')
         file_name = file_name[-1]
-        pth = f"/data/web_static/releases"
+        pth = "/data/web_static/releases"
         no_tgz_file = file_name.strip('.tgz')
-        run(f"mkdir -p {pth}/{no_tgz_file}/")
-        run(f"tar -xzf /tmp/{file_name} -C {pth}/{no_tgz_file}/")
-        run(f"rm /tmp/{file_name}")
-        run(f"mv {pth}/{no_tgz_file}/web_static/* {pth}/{no_tgz_file}/")
-        run(f"rm -rf {pth}/{no_tgz_file}/web_static/")
+        run("mkdir -p {}/{}/".format(pth, no_tgz_file))
+        run("tar -xzf /tmp/{} -C {}/{}/".format(file_name, pth, no_tgz_file))
+        run("rm /tmp/{}".format(file_name))
+        run("mv {}/{}/web_static/* {}/{}/"
+            .format(pth, no_tgz_file, pth, no_tgz_file))
+        run("rm -rf {}/{}/web_static/".format(pth, no_tgz_file))
         run("rm -rf /data/web_static/current")
-        run(f"ln -s {pth}/{no_tgz_file}/ /data/web_static/current")
+        run("ln -s {}/{}/ /data/web_static/current".format(pth, no_tgz_file))
         print("New version deployed!")
         return True
     except Exception:
