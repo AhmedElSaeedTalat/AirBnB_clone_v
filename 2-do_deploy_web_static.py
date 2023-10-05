@@ -1,11 +1,23 @@
 #!/usr/bin/python3
 """ distributes an archive to your web servers """
-from fabric.api import run, put, env
+from fabric.api import *
 import os
+from datetime import datetime
+import re
 env.hosts = [
         '52.23.178.138',
         '100.25.29.150'
         ]
+
+
+def do_pack():
+    """ do_pack(): packs dir """
+    date = datetime.now().isoformat()
+    date = re.findall('\\d+', date)
+    date = ''.join(date)
+    name = f'web_static_{date}.tgz'
+    local("mkdir -p versions")
+    local(f"tar -czvf ./versions/{name} ./web_static")
 
 
 def do_deploy(archive_path):
