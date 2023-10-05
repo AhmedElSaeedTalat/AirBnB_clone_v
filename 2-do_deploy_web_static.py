@@ -28,5 +28,5 @@ def do_deploy(archive_path):
         run(f"ln -s {pth}/{file_name.strip('.tgz')}/ /data/web_static/current")
         print("New version deployed!")
         return True
-    except Exception:
+    except:
         return False
