@@ -18,6 +18,10 @@ def do_pack():
     name = f'web_static_{date}.tgz'
     local("mkdir -p versions")
     local(f"tar -czvf ./versions/{name} ./web_static")
+    if res.succeeded:
+        return f"versions/{name}"
+    else:
+        return None
 
 
 def do_deploy(archive_path):
