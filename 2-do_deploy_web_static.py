@@ -15,8 +15,8 @@ def do_deploy(archive_path):
         return False
     try:
         put(archive_path, '/tmp/')
-        file_name = re.findall('(?<=versions/).+', archive_path)
-        file_name = file_name[0]
+        file_name = archive_path.split('/')
+        file_name = file_name[-1]
         pth = f"/data/web_static/releases"
         run(f"mkdir -p {pth}/{file_name.strip('.tgz')}/")
         run(f"tar -xzf /tmp/{file_name} -C {pth}/{file_name.strip('.tgz')}/")
