@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ distributes an archive to your web servers """
 from fabric.api import *
-import re
 import os
 env.hosts = [
         '52.23.178.138',
@@ -18,15 +17,15 @@ def do_deploy(archive_path):
         file_name = archive_path.split('/')
         file_name = file_name[-1]
         pth = f"/data/web_static/releases"
-        run(f"mkdir -p {pth}/{file_name.strip('.tgz')}/")
-        run(f"tar -xzf /tmp/{file_name} -C {pth}/{file_name.strip('.tgz')}/")
+        no_tgz_file = file_name.strip('.tgz')
+        run(f"mkdir -p {pth}/{no_tgz_file}/")
+        run(f"tar -xzf /tmp/{file_name} -C {pth}/{no_tgz_file}/")
         run(f"rm /tmp/{file_name}")
-        run(f"mv {pth}/{file_name.strip('.tgz')}/web_static/* \
-                {pth}/{file_name.strip('.tgz')}/")
-        run(f"rm -rf {pth}/{file_name.strip('.tgz')}/web_static/")
+        run(f"mv {pth}/{no_tgz_file}/web_static/* {pth}/{no_tgz_file}/")
+        run(f"rm -rf {pth}/{no_tgz_file}/web_static/")
         run("rm -rf /data/web_static/current")
-        run(f"ln -s {pth}/{file_name.strip('.tgz')}/ /data/web_static/current")
+        run(f"ln -s {pth}/{no_tgz_file}/ /data/web_static/current")
         print("New version deployed!")
         return True
-    except:
+    except Exception:
         return False
