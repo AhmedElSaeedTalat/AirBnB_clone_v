@@ -1,10 +1,12 @@
 #!/usr/bin/python3
-# script to set up flask
+""" script to set up flask """
 from flask import Flask, abort, render_template
 from markupsafe import escape
 
 
 app = Flask(__name__)
+
+
 @app.route('/', strict_slashes=False)
 def home():
     """ home(): function to route to home"""
@@ -61,7 +63,7 @@ def num_template(n):
     """
     try:
         int(n)
-        return render_template('5-number.html')
+        return render_template('5-number.html', n=n)
     except ValueError:
         return abort(404)
 
