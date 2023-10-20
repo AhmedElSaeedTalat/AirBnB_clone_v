@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# script to set up flask
+""" script to set up flask """
 from flask import Flask
 
 
