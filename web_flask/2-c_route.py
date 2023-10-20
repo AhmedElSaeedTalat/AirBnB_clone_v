@@ -1,10 +1,12 @@
 #!/usr/bin/python3
-# script to set up flask
+""" script to set up flask """
 from flask import Flask
 from markupsafe import escape
 
 
 app = Flask(__name__)
+
+
 @app.route('/', strict_slashes=False)
 def home():
     """ home(): function to route to home"""
