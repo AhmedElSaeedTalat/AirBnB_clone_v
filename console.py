@@ -151,7 +151,9 @@ class HBNBCommand(cmd.Cmd):
         print(new_instance.id)
         if os.environ.get('HBNB_TYPE_STORAGE') == 'db':
             storage.new(new_instance)
-        storage.save()
+            storage.save()
+        else:
+            new_instance.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -214,7 +216,7 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del(storage.all()[key])
+            del (storage.all()[key])
             storage.save()
         except KeyError:
             print("** no instance found **")
