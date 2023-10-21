@@ -3,8 +3,7 @@
 import uuid
 from datetime import datetime
 from sqlalchemy.orm import declarative_base
-from sqlalchemy import Column, Integer, String, DateTime, MetaData
-from datetime import datetime
+from sqlalchemy import Column, String, DateTime
 
 
 Base = declarative_base()
@@ -19,7 +18,6 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
         if not kwargs:
-            from models import storage
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
@@ -34,8 +32,6 @@ class BaseModel:
         """Returns a string representation of the instance"""
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
         new_dict = self.__dict__
-        if '_sa_instance_state' in new_dict.keys():
-            del new_dict['_sa_instance_state']
         return '[{}] ({}) {}'.format(cls, self.id, new_dict)
 
     def save(self):
