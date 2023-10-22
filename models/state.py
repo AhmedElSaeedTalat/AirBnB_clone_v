@@ -24,7 +24,7 @@ class State(BaseModel, Base):
             """ getter cities """
             cities_list = storage.all(City)
             related_cities = []
-            for key, city in cities_list.items():
+            for city in cities_list.values():
                 if city.state_id == self.id:
                     related_cities.append(city)
             return related_cities
