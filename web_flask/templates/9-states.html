@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <HTML lang="en">
 	<HEAD>
-		<TITLE>HBNB</HEAD>
+		<TITLE>HBNB</TITLE>
 	</HEAD>
 	<BODY>
-		{% if error %}
+	{% if error %}
 		<H1>Not found!</H1>
-		{% else %}
+	{% else %}
 		{% if state %}
 		<H1>State: {{state.name}}</H1>
 		<H3>Cities:</H3>
@@ -19,10 +19,10 @@
 		<H1>States</H1>
 		<UL>
 		{% for state in states | sort(attribute='name')%} 
-		<LI>{{state.id}}: <B>{{state.name}}</B></LI>
+			<LI>{{state.id}}: <B>{{state.name}}</B></LI>
 		{% endfor %}
+		</UL>
 		{% endif %}
-	</UL>
 	{% endif %}
 	</BODY>
 </HTML>
