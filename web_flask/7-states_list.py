@@ -17,7 +17,7 @@ def state_list():
 
 
 @app.teardown_appcontext
-def after_request(error=None):
+def after_request(exception):
     """ close session after each request """
     storage.close()
 
