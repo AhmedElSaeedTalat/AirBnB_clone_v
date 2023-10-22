@@ -22,9 +22,12 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
         else:
-            kwargs['updated_at'] = datetime.utcnow()
-            kwargs['created_at'] = datetime.utcnow()
-            kwargs['id'] = str(uuid.uuid4())
+            if 'updated_at' not in kwargs:
+                kwargs['updated_at'] = datetime.utcnow()
+            if 'created_at' not in kwargs:
+                kwargs['created_at'] = datetime.utcnow()
+            if 'id' not in kwargs:
+                kwargs['id'] = str(uuid.uuid4())
 
             self.__dict__.update(kwargs)
 
