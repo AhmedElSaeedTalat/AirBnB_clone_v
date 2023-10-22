@@ -12,10 +12,8 @@ app = Flask(__name__)
 def state_list():
     """ function that lists states """
     states = storage.all(State)
-    dict_state = {}
-    for key, state in states.items():
-        dict_state[state.id] = state.name
-    return render_template('7-states_list.html', states=dict_state)
+    sort = sorted(states.values(), key=lambda state: state.name)
+    return render_template('7-states_list.html', states=sort)
 
 
 @app.teardown_appcontext
@@ -25,4 +23,4 @@ def after_request(error=None):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="5000")
+    app.run(host="0.0.0.0", port=5000)
