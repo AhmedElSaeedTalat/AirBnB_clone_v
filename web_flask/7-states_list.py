@@ -19,7 +19,7 @@ def state_list():
 @app.teardown_appcontext
 def after_request(exception):
     """ close session after each request """
-    storage.close()
+    return storage.close()
 
 
 if __name__ == "__main__":
