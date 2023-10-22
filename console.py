@@ -2,7 +2,6 @@
 """ Console Module """
 import cmd
 import sys
-import re
 import os
 from models.base_model import BaseModel
 from models.__init__ import storage
@@ -83,7 +82,7 @@ class HBNBCommand(cmd.Cmd):
                         # _args = _args.replace('\"', '')
             line = ' '.join([_cmd, _cls, _id, _args])
 
-        except Exception as mess:
+        except Exception:
             pass
         finally:
             return line
