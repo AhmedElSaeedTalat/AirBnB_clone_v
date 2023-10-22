@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 
 @app.route('/hbnb_filters', strict_slashes=False)
-def fitler(id=None):
+def fitler():
     """ function that lists states """
     states = storage.all(State)
     sort = sorted(states.values(), key=lambda state: state.name)
