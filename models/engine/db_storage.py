@@ -40,7 +40,8 @@ class DBStorage:
             all_objs = self.__session.query(cls).all()
 
         for obj in all_objs:
-            my_dict[(str(type(obj)).split('.')[-1]).split('\'')[0] + '.' + obj.id] = obj
+            my_dict[(str(type(obj)).split('.')[-1])
+                    .split('\'')[0] + '.' + obj.id] = obj
         return my_dict
 
     def new(self, obj):
