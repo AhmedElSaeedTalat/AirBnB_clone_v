@@ -16,12 +16,6 @@ def state_list():
     return render_template('7-states_list.html', states=sort)
 
 
-@app.teardown_appcontext
-def after_request(exception):
-    """ close session after each request """
-    return storage.close()
-
-
 @app.route('/cities_by_states', strict_slashes=False)
 def load_cities():
     """ load cities by state """
@@ -32,6 +26,12 @@ def load_cities():
         for city in state.cities:
             print(city)
     return render_template('8-cities_by_states.html', states=sort)
+
+
+@app.teardown_appcontext
+def after_request(exception):
+    """ close session after each request """
+    return storage.close()
 
 
 if __name__ == "__main__":
