@@ -16,10 +16,6 @@ class FileStorage:
                 cls_name = key.split('.')
                 if cls.__name__ == cls_name[0] or cls == cls_name[0]:
                     cls_objects[key] = obj
-            # print('I am here')
-            # for key, state in cls_objects.items():
-            #    print(state)
-            # print('-----++--++--')
             return cls_objects
         return FileStorage.__objects
 
