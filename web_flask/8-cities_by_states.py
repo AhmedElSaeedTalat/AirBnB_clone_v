@@ -8,23 +8,11 @@ from models.state import State
 app = Flask(__name__)
 
 
-@app.route('/states_list', strict_slashes=False)
-def state_list():
-    """ function that lists states """
-    states = storage.all(State)
-    sort = sorted(states.values(), key=lambda state: state.name)
-    return render_template('7-states_list.html', states=sort)
-
-
 @app.route('/cities_by_states', strict_slashes=False)
 def load_cities():
     """ load cities by state """
     states = storage.all(State)
     sort = sorted(states.values(), key=lambda state: state.name)
-    print("side_note")
-    for state in sort:
-        for city in state.cities:
-            print(city)
     return render_template('8-cities_by_states.html', states=sort)
 
 
