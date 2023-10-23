@@ -70,3 +70,4 @@ class DBStorage:
         """ call remove method on a private session """
         if self.__session:
             self.__session.close()
+            self.reload()
