@@ -13,7 +13,7 @@ def state_list():
     """ function that lists states """
     states = storage.all(State)
     sort = sorted(states.values(), key=lambda state: state.name)
-    return render_template('7-states_list.html', states=sort)
+    return render_template('7-states_list.html', states=sort), 200
 
 
 @app.teardown_appcontext
